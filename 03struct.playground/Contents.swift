@@ -13,7 +13,7 @@ struct SimpleDate {
     var day: Int    // 日
 }
 
-// イニシャライザ（初期値）
+// 既定イニシャライザ　宣言時に設定
 struct SimpleDate2 {
     var year:Int = 2010
     var month:Int = 7
@@ -26,6 +26,9 @@ d.day = 29 // 代入も可能
 /* ---------------------------
         全項目イニシャライザ 
 -----------------------------*/
+// 個々のプロパティの値を指定してインスタンスを生成するイニシャライザ
+// 各プロパティ名を引数のキーワードとして書き連ねる
+
 // 構造体で初期値を指定していない場合は、使うときに指定を強制する
 struct AnotherDate {
     var month,day:Int
@@ -58,3 +61,39 @@ var t2 = Time(hour: 7, min: 0)
 /* ---------------------------
     カスタムイニシャライザ
 -----------------------------*/
+struct SimpleDate3 {
+    var year,month,day:Int
+    // init キーワードを指定して初期化する
+    init() {
+        self.year = 2095  // self も使えるが、省略できる
+        month = 10;day = 31
+    }
+}
+var m = SimpleDate3()   // 生成時にカスタムイニシャライザ init が動く
+print(m.year)
+
+/*--------------------------------------------------
+メソッド
+ ---------------------------------------------------*/
+
+// ▼メソッド定義を持つ構造体Time型
+struct Time2 {                // 時間と分のみを持つTime型
+    let hour, min : Int      // 定数で時刻を保持。全項目イニシャライザを使う
+    func advanced(min:Int) -> Time {        //　分を加算
+        var m = self.min + min
+        var h = self.hour
+        if m >= 60 {
+            h = (h + m / 60) % 24
+            m %= 60
+        }
+        return Time(hour:h,min:m)   // 新しいインスタンスを返す
+    }
+    func toString() -> String {     // 時刻を文字列として返す
+        let h = hour < 10 ? "\(hour)":"\(hour)"
+        let m = min < 10 ? "0\(min)":"\(min)"
+        return h + ":" + m
+    }
+}
+let t1 = Time(hour:22,min:45)       // 全項目イニシャライザ
+let t2 = t1.advanced(min:140)       // メソッド
+
