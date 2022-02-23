@@ -149,7 +149,7 @@ struct SimpleDate {
 
 SimpleDate.isLeap(2000)                 // trueが返る
 SimpleDate.dayOfMonth(2, year:2000)     // 29が返る
-let d= SimpleDate(year:2024, month: 11, day: 7)
+let d = SimpleDate(year:2024, month: 11, day: 7)
 print("うるう年？", d.leapYear())        // true が返る
 
 //----------------------------------------------------------
